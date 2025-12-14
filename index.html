@@ -3,71 +3,78 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cyber Multi‑Section Interface</title>
+<title>Hacker Terminal OS</title>
+
 <style>
- body { margin:0; background:#000; color:#00ffbf; font-family:"Courier New", monospace; }
- section { min-height:100vh; padding:30px; display:flex; flex-direction:column; justify-content:center; }
- h1 { color:#00ffe5; text-shadow:0 0 10px #00ffe5; }
- .terminal-box { background:#000000aa; padding:20px; border:1px solid #00ffbf; border-radius:10px; }
- .grid-bg { background:linear-gradient(#001, #000); position:relative; overflow:hidden; }
- .grid-bg::before { content:""; position:absolute; inset:0; background:repeating-linear-gradient(#00ffbf22 0 2px, transparent 2px 40px), repeating-linear-gradient(90deg, #00ffbf22 0 2px, transparent 2px 40px); animation:gridMove 5s linear infinite; }
- @keyframes gridMove { to { transform:translateY(40px); } }
- .dashboard { display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); }
- .card { border:1px solid #00ffbf; padding:15px; border-radius:8px; background:#001; box-shadow:0 0 10px #00ffbf55; }
- .identity { text-align:center; padding:20px; border:1px solid #00ffbf; border-radius:12px; background:#001; box-shadow:0 0 10px #00ffbf55; }
- .nav { position:fixed; top:10px; left:50%; transform:translateX(-50%); display:flex; gap:10px; }
- .nav a { color:#00ffe5; text-decoration:none; padding:8px 15px; border:1px solid #00ffe5; border-radius:6px; }
+  body {
+    margin: 0;
+    background: #000;
+    color: #00ffbf;
+    font-family: "Courier New", monospace;
+  }
+
+  section {
+    min-height: 100vh;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  h1 {
+    color: #00ffe5;
+    text-shadow: 0 0 10px #00ffe5;
+  }
+
+  .terminal-box {
+    background: #000000aa;
+    padding: 20px;
+    border: 1px solid #00ffbf;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00ffbf55;
+    line-height: 1.6;
+  }
 </style>
 </head>
+
 <body>
 
-<!-- SECTION 1 -->
-<section id="sec1">
- <h1>$ Hacker Terminal OS</h1>
- <div class="terminal-box" id="terminal"></div>
-</section>
-
-<!-- SECTION 2 -->
-<section id="sec2">
- <h1>Cyber Command Dashboard</h1>
- <div class="dashboard">
-   <div class="card" id="ipCard">Fetching IP...</div>
-   <div class="card" id="agentCard">Fetching Browser Info...</div>
-   <div class="card" id="platformCard">Fetching Device Info...</div>
-   <div class="card">Network Monitor: Stable ✓</div>
- </div>
+<section>
+  <h1>$ Hacker Terminal OS</h1>
+  <div class="terminal-box" id="terminal">
+    Initializing system...
+  </div>
 </section>
 
 <script>
- async function getIP(){ try{ let r=await fetch("https://api64.ipify.org?format=json"); let d=await r.json(); return d.ip;}catch(e){return "Unavailable";} }
- let ua=navigator.userAgent;
- let platform=navigator.platform;
- let lang=navigator.language;
+async function getIP() {
+  try {
+    const res = await fetch("https://api64.ipify.org?format=json");
+    const data = await res.json();
+    return data.ip;
+  } catch {
+    return "Unavailable";
+  }
+}
 
- async function loadAll(){
-   let ip = await getIP();
+async function loadTerminal() {
+  const ip = await getIP();
+  const ua = navigator.userAgent;
+  const platform = navigator.platform;
+  const lang = navigator.language;
 
-   // Terminal OS
-   document.getElementById("terminal").innerHTML = `Booting Cyber System...<br>Scanning network...<br>IP: ${ip}<br>User-Agent: ${ua}<br>Platform: ${platform}<br>Language: ${lang}<br><br>System Ready.`;
+  document.getElementById("terminal").innerHTML = `
+    Booting Cyber System...<br>
+    Scanning network...<br>
+    IP Address: ${ip}<br>
+    User-Agent: ${ua}<br>
+    Platform: ${platform}<br>
+    Language: ${lang}<br><br>
+    <span style="color:#00ffe5;">System Ready ✓</span>
+  `;
+}
 
-   // Dashboard Cards
-   document.getElementById("ipCard").innerHTML = `<strong>IP Address</strong><br>${ip}`;
-   document.getElementById("agentCard").innerHTML = `<strong>User Agent</strong><br>${ua}`;
-   document.getElementById("platformCard").innerHTML = `<strong>Platform</strong><br>${platform}<br><strong>Language:</strong> ${lang}`;
-
-   // Grid Terminal
-   document.getElementById("gridTerm").innerHTML = `Connected to Cyber Grid<br>IP: ${ip}<br>Browser: ${ua}`;
-
-   // Identity
-   document.getElementById("identityBox").innerHTML = `
-     <h2>DEVICE IDENTITY</h2>
-     <p><strong>IP:</strong> ${ip}</p>
-     <p><strong>Browser:</strong> ${ua}</p>
-     <p><strong>Platform:</strong> ${platform}</p>
-     <p><strong>Language:</strong> ${lang}</p>
-   `;
- }
- loadAll();
+loadTerminal();
 </script>
 
 </body>
